@@ -73,6 +73,7 @@ export enum PrimaryActionAuto {
 export enum PrimaryActionCore {
   Asm = 'asm',
   Compile = 'compile',
+  Verify = 'verify',
   Execute = 'execute',
   LlvmIr = 'llvm-ir',
   Hir = 'hir',

@@ -31,6 +31,7 @@ const autoPrimaryActionSelector = createSelector(
   hasTestsSelector,
   hasMainFunctionSelector,
   (crateType, hasTests, hasMainFunction) => {
+    return PrimaryActionCore.Verify;
     if (crateType && crateType !== 'proc-macro') {
       if (crateType === 'bin') {
         return PrimaryActionCore.Execute;
@@ -89,6 +90,7 @@ const primaryActionSelector = createSelector(
 const LABELS: { [index in PrimaryActionCore]: string } = {
   [PrimaryActionCore.Asm]: 'Show Assembly',
   [PrimaryActionCore.Compile]: 'Build',
+  [PrimaryActionCore.Verify]: 'Verify',
   [PrimaryActionCore.Execute]: 'Run',
   [PrimaryActionCore.LlvmIr]: 'Show LLVM IR',
   [PrimaryActionCore.Hir]: 'Show HIR',

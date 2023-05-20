@@ -37,6 +37,7 @@ import { performGistLoad } from './reducers/output/gist';
 export const routes = {
   compile: '/compile',
   execute: '/execute',
+  verify: '/verify',
   format: '/format',
   clippy: '/clippy',
   miri: '/miri',
@@ -266,6 +267,7 @@ function performAutoOnly(): ThunkAction {
 }
 
 const performExecuteOnly = (): ThunkAction => performCommonExecute('bin', false);
+const performVerifyOnly = (): ThunkAction => performCommonExecute('verify', false);
 const performCompileOnly = (): ThunkAction => performCommonExecute('lib', false);
 const performTestOnly = (): ThunkAction => performCommonExecute('lib', true);
 
@@ -425,6 +427,7 @@ const performCompileToNightlyWasmOnly = (): ThunkAction => dispatch => {
 const PRIMARY_ACTIONS: { [index in PrimaryAction]: () => ThunkAction } = {
   [PrimaryActionCore.Asm]: performCompileToAssemblyOnly,
   [PrimaryActionCore.Compile]: performCompileOnly,
+  [PrimaryActionCore.Verify]: performVerifyOnly,
   [PrimaryActionCore.Execute]: performExecuteOnly,
   [PrimaryActionCore.Test]: performTestOnly,
   [PrimaryActionAuto.Auto]: performAutoOnly,
@@ -447,6 +450,8 @@ const performAndSwitchPrimaryAction = (inner: () => ThunkAction, id: PrimaryActi
 
 export const performExecute =
   performAndSwitchPrimaryAction(performExecuteOnly, PrimaryActionCore.Execute);
+export const performVerify =
+  performAndSwitchPrimaryAction(performVerifyOnly, PrimaryActionCore.Verify);
 export const performCompile =
   performAndSwitchPrimaryAction(performCompileOnly, PrimaryActionCore.Compile);
 export const performTest =
