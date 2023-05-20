@@ -2,13 +2,16 @@
 Description=The Rust Playground
 
 [Service]
-Environment=TMPDIR=/mnt/playground
+Environment=TMPDIR=/tmp
 Environment=RUST_LOG=info
 Environment=PLAYGROUND_UI_ADDRESS=0.0.0.0
 Environment=PLAYGROUND_UI_PORT=8080
-Environment=PLAYGROUND_UI_ROOT=/home/ubuntu/playground-artifacts/build
+Environment=PLAYGROUND_UI_ROOT=/home/playground/rust-playground/ui/frontend/build
 Environment=PLAYGROUND_CORS_ENABLED=1
 
-WorkingDirectory=/home/ubuntu/playground-artifacts
+WorkingDirectory=/home/playground/rust-playground
 
-ExecStart=/home/ubuntu/playground-artifacts/ui
+ExecStart=/home/playground/rust-playground/ui/target/debug/ui
+
+[Install]
+WantedBy=multi-user.target
