@@ -22,14 +22,18 @@ mod sandbox;
 mod server_axum;
 
 fn main() {
+    println!("Starting up...");
     // Dotenv may be unable to load environment variables, but that's ok in production
     let _ = dotenv::dotenv();
     openssl_probe::init_ssl_cert_env_vars();
 
+    println!("Probed certs");
     // Info-level logging is enabled by default.
     tracing_subscriber::fmt::init();
+    println!("Enabled tracing");
 
     let config = Config::from_env();
+    println!("Launching server");
     server_axum::serve(config);
 }
 
@@ -687,6 +691,7 @@ fn parse_crate_type(s: &str) -> Result<sandbox::CrateType> {
     use crate::sandbox::{CrateType::*, LibraryType::*};
     Ok(match s {
         "bin" => Binary,
+        "verify" => Verify,
         "lib" => Library(Lib),
         "dylib" => Library(Dylib),
         "rlib" => Library(Rlib),

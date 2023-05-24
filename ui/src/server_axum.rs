@@ -67,6 +67,7 @@ pub(crate) async fn serve(config: Config) {
         .layer(rewrite_help_as_index)
         .route("/evaluate.json", post(evaluate))
         .route("/compile", post(compile))
+        .route("/verify", post(verify))
         .route("/execute", post(execute))
         .route("/format", post(format))
         .route("/clippy", post(clippy))
@@ -142,6 +143,7 @@ async fn rewrite_help_as_index<B>(
 // This is a backwards compatibilty shim. The Rust documentation uses
 // this to run code in place.
 async fn evaluate(Json(req): Json<EvaluateRequest>) -> Result<Json<EvaluateResponse>> {
+    println!("evaluate: {:?}", req);
     with_sandbox_force_endpoint(
         req,
         Endpoint::Evaluate,
@@ -162,7 +164,19 @@ async fn compile(Json(req): Json<CompileRequest>) -> Result<Json<CompileResponse
     .map(Json)
 }
 
+async fn verify(Json(req): Json<ExecuteRequest>) -> Result<Json<ExecuteResponse>> {
+    println!("verify: {:?}", req);
+    with_sandbox(
+        req,
+        |sb, req| async move { sb.execute(req).await }.boxed(),
+        ExecutionSnafu,
+    )
+    .await
+    .map(Json)
+}
+
 async fn execute(Json(req): Json<ExecuteRequest>) -> Result<Json<ExecuteResponse>> {
+    println!("execute: {:?}", req);
     with_sandbox(
         req,
         |sb, req| async move { sb.execute(req).await }.boxed(),
@@ -222,8 +236,11 @@ where
     SbResp: SuccessDetails,
     Ctx: IntoError<Error, Source = sandbox::Error>,
 {
+    println!("Running with_sandbox");
     let sandbox = Sandbox::new().await.context(SandboxCreationSnafu)?;
+    println!("...created sandbox");
     let request = req.try_into()?;
+    println!("Extracted request");
     track_metric_async(request, |request| f(sandbox, request))
         .await
         .map(Into::into)
@@ -243,6 +260,7 @@ where
     SbResp: SuccessDetails,
     Ctx: IntoError<Error, Source = sandbox::Error>,
 {
+    println!("Running with_sandbox_force_endpoint");
     let sandbox = Sandbox::new().await.context(SandboxCreationSnafu)?;
     let request = req.try_into()?;
     track_metric_force_endpoint_async(request, endpoint, |request| f(sandbox, request))
