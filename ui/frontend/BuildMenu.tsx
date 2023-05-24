@@ -38,7 +38,6 @@ const BuildMenu: React.FC<BuildMenuProps> = props => {
   const compileToHir = useDispatchAndClose(actions.performCompileToNightlyHir, props.close);
   const compileToWasm = useDispatchAndClose(actions.performCompileToNightlyWasm, props.close);
   const execute = useDispatchAndClose(actions.performExecute, props.close);
-  const verify = useDispatchAndClose(actions.performVerify, props.close);
   const test = useDispatchAndClose(actions.performTest, props.close);
 
   return (
@@ -46,10 +45,6 @@ const BuildMenu: React.FC<BuildMenuProps> = props => {
       <ButtonMenuItem name="Run" onClick={execute}>
         Build and run the code, showing the output.
         Equivalent to <code className={styles.code}>cargo run</code>.
-      </ButtonMenuItem>
-      <ButtonMenuItem name="Verify" onClick={verify}>
-        Verify the code, showing the output.
-        Equivalent to running <code className={styles.code}>verus</code>.
       </ButtonMenuItem>
       <ButtonMenuItem name="Build" onClick={compile}>
         Build the code without running it.
