@@ -159,7 +159,11 @@ fn build_execution_command(
     use self::CrateType::*;
     use self::Mode::*;
 
-    let cmd = vec!["/playground/verus/source/target-verus/release/verus", "/playground/src/main.rs"];
+    let mut cmd = vec!["/playground/verus/source/target-verus/release/verus"];
+    if mode == Debug {
+        cmd.push("--expand-errors");
+    }
+    cmd.push("/playground/src/main.rs");
     cmd
     /*
 
