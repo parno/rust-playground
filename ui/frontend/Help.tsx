@@ -134,7 +134,7 @@ const Help: React.FC = () => {
           </p>
 
           <p>
-            You can choose which mode to compile in using the <strong>Mode</strong>
+            You can choose which mode to verify with using the <strong>Error Mode</strong>
             {' '}
             menu.
           </p>
