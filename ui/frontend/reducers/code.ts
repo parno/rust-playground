@@ -2,8 +2,14 @@ import { Action, ActionType } from '../actions';
 import { performGistLoad } from './output/gist'
 import { performFormat } from './output/format'
 
-const DEFAULT: State = `fn main() {
-    println!("Hello, world!");
+const DEFAULT: State = `use vstd::prelude::*;
+
+verus! {
+
+fn main() {
+    assert(42 > 0);
+}
+
 }`;
 
 export type State = string;
