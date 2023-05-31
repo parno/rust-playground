@@ -89,7 +89,7 @@ const primaryActionSelector = createSelector(
 const LABELS: { [index in PrimaryActionCore]: string } = {
   [PrimaryActionCore.Asm]: 'Show Assembly',
   [PrimaryActionCore.Compile]: 'Build',
-  [PrimaryActionCore.Execute]: 'Run',
+  [PrimaryActionCore.Execute]: 'Verify',
   [PrimaryActionCore.LlvmIr]: 'Show LLVM IR',
   [PrimaryActionCore.Hir]: 'Show HIR',
   [PrimaryActionCore.Mir]: 'Show MIR',

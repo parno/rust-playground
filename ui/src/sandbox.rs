@@ -159,6 +159,10 @@ fn build_execution_command(
     use self::CrateType::*;
     use self::Mode::*;
 
+    let cmd = vec!["/playground/verus/source/target-verus/release/verus", "/playground/src/main.rs"];
+    cmd
+    /*
+
     let mut cmd = vec!["cargo"];
 
     match (target, req.crate_type(), tests) {
@@ -208,6 +212,7 @@ fn build_execution_command(
     }
 
     cmd
+    */
 }
 
 fn set_execution_environment(
@@ -532,11 +537,12 @@ impl Sandbox {
         req: impl CrateTypeRequest + EditionRequest + BacktraceRequest,
     ) -> Command {
         let mut cmd = self.docker_command(Some(req.crate_type()));
-        set_execution_environment(&mut cmd, None, &req);
+        //set_execution_environment(&mut cmd, None, &req);
 
         let execution_cmd = build_execution_command(None, channel, mode, &req, tests);
 
-        cmd.arg(&channel.container_name()).args(&execution_cmd);
+        //cmd.arg(&channel.container_name()).args(&execution_cmd);
+        cmd.arg("verus").args(&execution_cmd);
 
         debug!("Execution command is {:?}", cmd);
 

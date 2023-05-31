@@ -42,9 +42,8 @@ const BuildMenu: React.FC<BuildMenuProps> = props => {
 
   return (
     <MenuGroup title="What do you want to do?">
-      <ButtonMenuItem name="Run" onClick={execute}>
-        Build and run the code, showing the output.
-        Equivalent to <code className={styles.code}>cargo run</code>.
+      <ButtonMenuItem name="Verify" onClick={execute}>
+        Verify the code with Verus.
       </ButtonMenuItem>
       <ButtonMenuItem name="Build" onClick={compile}>
         Build the code without running it.
