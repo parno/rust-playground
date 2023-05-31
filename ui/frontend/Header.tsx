@@ -24,24 +24,16 @@ const Header: React.FC = () => (
     <HeaderSet id="build">
       <SegmentedButtonSet>
         <ExecuteButton />
-        <BuildMenuButton />
       </SegmentedButtonSet>
     </HeaderSet>
     <HeaderSet id="channel-mode">
       <SegmentedButtonSet>
         <ModeMenuButton />
-        <ChannelMenuButton />
-        <AdvancedOptionsMenuButton />
       </SegmentedButtonSet>
     </HeaderSet>
     <HeaderSet id="share">
       <SegmentedButtonSet>
         <ShareButton />
-      </SegmentedButtonSet>
-    </HeaderSet>
-    <HeaderSet id="tools">
-      <SegmentedButtonSet>
-        <ToolsMenuButton />
       </SegmentedButtonSet>
     </HeaderSet>
     <HeaderSet id="config">

@@ -23,22 +23,22 @@ const ModeMenu: React.FC<ModeMenuProps> = props => {
 
   return (
     <Fragment>
-      <MenuGroup title="Mode &mdash; Choose optimization level">
+      <MenuGroup title="Error reporting level">
         <SelectOne
-          name="Debug"
-          currentValue={mode}
-          thisValue={Mode.Debug}
-          changeValue={changeMode}
-        >
-          Build with debug information, without optimizations.
-        </SelectOne>
-        <SelectOne
-          name="Release"
+          name="Basic Errors"
           currentValue={mode}
           thisValue={Mode.Release}
           changeValue={changeMode}
         >
-          Build with optimizations turned on.
+          Run with basic error reporting.
+        </SelectOne>
+        <SelectOne
+          name="Detailed Errors"
+          currentValue={mode}
+          thisValue={Mode.Debug}
+          changeValue={changeMode}
+        >
+          Attempts to expand errors in more detail.
         </SelectOne>
       </MenuGroup>
     </Fragment>

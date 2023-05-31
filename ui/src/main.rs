@@ -667,8 +667,8 @@ fn parse_channel(s: &str) -> Result<sandbox::Channel> {
 
 fn parse_mode(s: &str) -> Result<sandbox::Mode> {
     Ok(match s {
-        "debug" => sandbox::Mode::Debug,
-        "release" => sandbox::Mode::Release,
+        "detailed" => sandbox::Mode::Debug,
+        "basic" => sandbox::Mode::Release,
         value => InvalidModeSnafu { value }.fail()?,
     })
 }

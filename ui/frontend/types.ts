@@ -90,8 +90,8 @@ export enum Channel {
 }
 
 export enum Mode {
-  Debug = 'debug',
-  Release = 'release',
+  Debug = 'detailed',
+  Release = 'basic',
 }
 
 export enum Edition {

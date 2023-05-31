@@ -110,39 +110,6 @@ const ConfigMenu: React.FC = () => {
         </SelectConfig>
       </MenuGroup>
 
-      <MenuGroup title="Assembly">
-        <EitherConfig
-          id="assembly-flavor"
-          name="Flavor"
-          a={AssemblyFlavor.Att}
-          b={AssemblyFlavor.Intel}
-          aLabel="AT&T"
-          bLabel="Intel"
-          value={assemblyFlavor}
-          onChange={changeAssemblyFlavor} />
-
-        <EitherConfig
-          id="assembly-symbols"
-          name="Symbol Demangling"
-          a={DemangleAssembly.Demangle}
-          b={DemangleAssembly.Mangle}
-          aLabel="On"
-          bLabel="Off"
-          value={demangleAssembly}
-          onChange={changeDemangleAssembly}
-        />
-
-        <EitherConfig
-          id="assembly-view"
-          name="Name Filtering"
-          a={ProcessAssembly.Filter}
-          b={ProcessAssembly.Raw}
-          aLabel="On"
-          bLabel="Off"
-          value={processAssembly}
-          onChange={changeProcessAssembly}
-        />
-      </MenuGroup>
     </Fragment>
   );
 };
