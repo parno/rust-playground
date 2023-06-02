@@ -5,10 +5,10 @@ server {
     listen 443 ssl default_server;
     listen [::]:443 ssl default_server;
 
-    server_name AuroraR8-eb5c.andrew.cmu.edu;
+    server_name play.verus-lang.org;
 
-    ssl_certificate /etc/letsencrypt/live/aurorar8-eb5c.andrew.cmu.edu/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/aurorar8-eb5c.andrew.cmu.edu/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/play.verus-lang.org/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/play.verus-lang.org/privkey.pem;
 
     location / {
         proxy_set_header Host $host;
