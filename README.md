@@ -1,31 +1,25 @@
-# Rust Playground
+# Verus Playground
 
-This is the home of the [Rust Playground][real],
-also [hosted by Integer 32][us].
+This is the home of the [Verus Playground][verus],
+inspired by the [Rust Playground][real].
 
 [real]: https://play.rust-lang.org/
-[us]: https://play.integer32.com/
+[verus]: https://play.verus-lang.org/
 
 ## What's it do?
 
-The playground allows you to experiment with Rust before you install
+The playground allows you to experiment with [Verus][verus] before you install
 it locally, or in any other case where you might not have the compiler
 available.
 
 It has a number of features, including:
 
 1. A nice, unobtrusive editor with syntax highlighting.
-1. The ability to compile in debug or release mode against the current
-   stable, beta, or nightly version of Rust.
-1. The top 100 popular crates (ranked by all-time downloads), crates
-   that are part of the [Rust Cookbook][] and all of their
-   dependencies are available for use!
+1. The ability to run with basic or detailed error messages.
 1. The ability to quickly load and save your code to a
    GitHub [Gist][gist] and share it with your friends.
-1. [rustfmt][] and [Clippy][clippy] can be run against the source code.
-1. The ability to see the LLVM IR, assembly, or Rust MIR for the
-   source code.
 
+[verus]: https://github.com/verus-lang/verus
 [Rust Cookbook]: https://rust-lang-nursery.github.io/rust-cookbook/
 [gist]: https://gist.github.com/
 [rustfmt]: https://github.com/rust-lang/rustfmt
@@ -75,13 +69,19 @@ A large set of thanks go to those individuals who have helped by
 reporting security holes or other attack vectors against the
 Playground. Each report helps us make the Playground better!
 
-* Preliminary sandbox testing (PID limit) by Stefan O'Rear.
-
 If you'd like to perform tests that you think might disrupt service of
 the Playground, get in touch and we can create an isolated clone to
 perform tests on! Once fixed, you can choose to be credited here.
 
+## Deployment
+
+To deploy the playground, follow the instructions in the [deployment folder](./deployment/).
+
 ## Development
+
+To experiment locally, you need to follow the instructions below.  See the
+[deployment configuration script](./deployment/lxc-config.yaml) for more
+details.
 
 ### Build the UI
 ```
@@ -106,16 +106,12 @@ There are some optional configuration parameters described in the
 run with no configuration, but in order to load and save gists a GitHub token
 must be configured.
 
-### Build or download the containers
+### Build the container
 ```
 cd compiler
-./build.sh # If you want to test changes to the containers
-./fetch.sh # If you just want the current playground
+docker build -t verus .
 ```
 
-## Deployment
-
-* [Amazon EC2 (Ubuntu)](deployment/ubuntu.md)
 
 ## License
 
