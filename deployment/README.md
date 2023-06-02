@@ -65,4 +65,30 @@ means that it is portable to multiple cloud providers (i.e., instead of lxc).
         service playground restart
         ```
 
+# Updating the Playground
 
+## Updating the front-end
+Update the files in `rust-playground/ui/frontend` and push them to the repository.
+Then, on the server run:
+
+```
+sudo lxc exec playground -- /bin/bash
+su playground
+~/rust-playground/ui/frontend
+git pull
+yarn build
+```
+
+### Updating the back-end
+Update the files in `rust-playground/ui/src` and push them to the repository.
+Then, on the server run:
+
+```
+sudo lxc exec playground -- /bin/bash
+su playground
+~/rust-playground/ui/
+git pull
+cargo build
+exit
+service playground restart
+```
