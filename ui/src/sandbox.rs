@@ -1,7 +1,6 @@
 use serde_derive::Deserialize;
 use snafu::prelude::*;
 use std::{
-    collections::BTreeMap,
     ffi::OsStr,
     fmt, io,
     io::ErrorKind,
@@ -149,14 +148,14 @@ fn basic_secure_docker_command() -> Command {
 }
 
 fn build_execution_command(
-    target: Option<CompileTarget>,
-    channel: Channel,
+    _target: Option<CompileTarget>,
+    _channel: Channel,
     mode: Mode,
-    req: impl CrateTypeRequest,
-    tests: bool,
+    _req: impl CrateTypeRequest,
+    _tests: bool,
 ) -> Vec<&'static str> {
-    use self::CompileTarget::*;
-    use self::CrateType::*;
+    //use self::CompileTarget::*;
+    //use self::CrateType::*;
     use self::Mode::*;
 
     let mut cmd = vec!["/playground/verus/source/target-verus/release/verus"];
@@ -430,7 +429,7 @@ impl Sandbox {
         */
     }
 
-    pub async fn version(&self, channel: Channel) -> Result<Version> {
+    pub async fn version(&self, _channel: Channel) -> Result<Version> {
         Err(Error::OutputMissing)
         /*
         let mut command = basic_secure_docker_command();
@@ -496,7 +495,8 @@ impl Sandbox {
     }
 
     // Parses versions of the shape `toolname 0.0.0 (0000000 0000-00-00)`
-    async fn cargo_tool_version(&self, command: Command) -> Result<Version> {
+    /*
+    async fn cargo_tool_version(&self, _command: Command) -> Result<Version> {
         Err(Error::OutputMissing)
         /*
         let output = run_command_with_timeout(command).await?;
@@ -514,6 +514,7 @@ impl Sandbox {
         })
         */
     }
+    */
 
     async fn write_source_code(&self, code: &str) -> Result<()> {
         fs::write(&self.input_file, code)
