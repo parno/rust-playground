@@ -9,11 +9,81 @@ config:
   image.type: squashfs
   image.version: "22.04"
   security.nesting: "true"
+  cloud-init.user-data: |
+    #cloud-config
+    package_update: true
+    package_upgrade: true
+    packages:
+      # For fetching software
+      - curl
+      - git
+      - unzip
+      # Compiling playground's Rust code
+      - build-essential
+      # Compiling playground's web content 
+      - yarn
+      # Serving playground's web content
+      - nginx
+      - certbot
+      # Updating apt lists to include Docker's key
+      - ca-certificates
+      - gnupg
+    write_files:
+      - encoding: b64
+        content: ewogICAgInN0b3JhZ2UtZHJpdmVyIjogIm92ZXJsYXkyIgp9Cg==
+          # {
+          #  "storage-driver": "overlay2"
+          # } 
+        owner: root:root
+        path: /etc/docker/daemon.json
+        permissions: '0644'
+    users:
+      - name: playground
+    runcmd:
+      # Install docker as per https://docs.docker.com/engine/install/ubuntu/
+      - install -m 0755 -d /etc/apt/keyrings
+      - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+      - chmod a+r /etc/apt/keyrings/docker.gpg
+      - echo "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | tee /etc/apt/sources.list.d/docker.list > /dev/null
+      - apt-get update
+      - apt-get -y install docker-ce
+      # Add playground user to docker group
+      - usermod -a -G docker playground
+      # Install nodejs 18 (the playground wants this specific version)
+      - curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt-get install -y nodejs
+      # Install yarn (first removing cmdtest, which includes its own binary called yarn)
+      - apt-get -y remove cmdtest
+      - npm install --global yarn
+      # Install rustup
+      - su playground -c "cd /home/playground/ && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+      # Acquire and build the playground
+      - su playground -c "git clone https://github.com/parno/rust-playground.git /home/playground/rust-playground"
+      - su playground -c "cd /home/playground/rust-playground/ui/frontend && yarn && yarn build"
+      - su -l playground -c "cd /home/playground/rust-playground/ui/ && cargo build"
+      - cd /home/playground/rust-playground/compiler/verus/ && docker build -t verus .
+      # Install the systemd service
+      - cp /home/playground/rust-playground/deployment/playground.service /etc/systemd/system/playground.service
+      - service playground start
+      - systemctl enable playground.service
+      # Configure TLS
+      - service nginx stop
+      - certbot certonly --non-interactive --standalone -d play.verus-lang.org --agree-tos -m parno@cmu.edu --no-eff-email
+      # Install the Nginx reverse proxy
+      - cp /home/playground/rust-playground/deployment/playground-reverse-proxy /etc/nginx/sites-enabled
+      - rm /etc/nginx/sites-enabled/default
+      - service nginx start
+
 devices:
   eth0:
     name: eth0
     network: lxdbr0
     type: nic
+  # Needed to be able to run certbot
+  proxy80:
+    connect: tcp:127.0.0.1:80
+    listen: tcp:0.0.0.0:80
+    type: proxy
+  # Needed for TLS connections to the playground
   proxy443:
     connect: tcp:127.0.0.1:443
     listen: tcp:0.0.0.0:443
