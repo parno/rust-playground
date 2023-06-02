@@ -51,14 +51,14 @@ means that it is portable to multiple cloud providers (i.e., instead of lxc).
       less /var/log/cloud-init{.log,-output.log}
       ```
 
-- Final configuration inside the container
-  0. Connect to the container
+- Perform final configuration steps inside the container
+  1. Connect to the container
      ```
      sudo lxc exec playground -- /bin/bash
      ```
-  1. Enable Gist support
+  2. Enable Gist support
       - Edit `/etc/systemd/system/playground.service` to add your GitHub
-        fine-grained personal acccess token to the entry for `PLAYGROUND_GITHUB_TOKEN`
+        fine-grained personal acccess token (see above) to the entry for `PLAYGROUND_GITHUB_TOKEN`
       - As root, run:
         ```
         systemctl daemon-reload
