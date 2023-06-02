@@ -50,7 +50,7 @@ fn main ()
 { struct Foo { a: u8, b: String, }
 match 4 {2=>{},_=>{}} }`;
 
-const LINK_EXAMPLE = 'https://play.integer32.com/?code=fn main() { assert(42 > 0); }';
+const LINK_EXAMPLE = 'https://play.verus-lang.org/?code=fn main() { assert(42 > 0); }';
 
 const TEST_EXAMPLE = `#[test]
 fn test_something() {
