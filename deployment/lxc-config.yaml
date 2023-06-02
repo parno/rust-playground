@@ -1,0 +1,30 @@
+architecture: x86_64
+config:
+  image.architecture: amd64
+  image.description: ubuntu 22.04 LTS amd64 (release) (20230427)
+  image.label: release
+  image.os: ubuntu
+  image.release: jammy
+  image.serial: "20230427"
+  image.type: squashfs
+  image.version: "22.04"
+  security.nesting: "true"
+devices:
+  eth0:
+    name: eth0
+    network: lxdbr0
+    type: nic
+  proxy443:
+    connect: tcp:127.0.0.1:443
+    listen: tcp:0.0.0.0:443
+    type: proxy
+  root:
+    path: /
+    pool: default
+    type: disk
+ephemeral: false
+profiles:
+- default
+stateful: false
+description: "Verus Playground container"
+
