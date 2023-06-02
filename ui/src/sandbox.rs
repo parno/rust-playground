@@ -413,6 +413,8 @@ impl Sandbox {
     }
 
     pub async fn crates(&self) -> Result<Vec<CrateInformation>> {
+        Err(Error::OutputMissing)
+        /*
         let mut command = basic_secure_docker_command();
         command.args(&[Channel::Stable.container_name()]);
         command.args(&["cat", "crate-information.json"]);
@@ -425,9 +427,12 @@ impl Sandbox {
         let crates = crate_info.into_iter().map(Into::into).collect();
 
         Ok(crates)
+        */
     }
 
     pub async fn version(&self, channel: Channel) -> Result<Version> {
+        Err(Error::OutputMissing)
+        /*
         let mut command = basic_secure_docker_command();
         command.args(&[channel.container_name()]);
         command.args(&["rustc", "--version", "--verbose"]);
@@ -460,28 +465,40 @@ impl Sandbox {
             commit_hash,
             commit_date,
         })
+        */
     }
 
     pub async fn version_rustfmt(&self) -> Result<Version> {
+        Err(Error::OutputMissing)
+        /*
         let mut command = basic_secure_docker_command();
         command.args(&["rustfmt", "cargo", "fmt", "--version"]);
         self.cargo_tool_version(command).await
+        */
     }
 
     pub async fn version_clippy(&self) -> Result<Version> {
+        Err(Error::OutputMissing)
+        /*
         let mut command = basic_secure_docker_command();
         command.args(&["clippy", "cargo", "clippy", "--version"]);
         self.cargo_tool_version(command).await
+        */
     }
 
     pub async fn version_miri(&self) -> Result<Version> {
+        Err(Error::OutputMissing)
+        /*
         let mut command = basic_secure_docker_command();
         command.args(&["miri", "cargo", "miri", "--version"]);
         self.cargo_tool_version(command).await
+        */
     }
 
     // Parses versions of the shape `toolname 0.0.0 (0000000 0000-00-00)`
     async fn cargo_tool_version(&self, command: Command) -> Result<Version> {
+        Err(Error::OutputMissing)
+        /*
         let output = run_command_with_timeout(command).await?;
         let version_output = vec_to_str(output.stdout)?;
         let mut parts = version_output.split_whitespace().fuse().skip(1);
@@ -495,6 +512,7 @@ impl Sandbox {
             commit_hash,
             commit_date,
         })
+        */
     }
 
     async fn write_source_code(&self, code: &str) -> Result<()> {
@@ -632,6 +650,8 @@ impl Sandbox {
 
 async fn run_command_with_timeout(mut command: Command) -> Result<std::process::Output> {
     use std::os::unix::process::ExitStatusExt;
+
+    debug!("Running command: {:?}", command);
 
     let timeout = DOCKER_PROCESS_TIMEOUT_HARD;
 
