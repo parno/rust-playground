@@ -1,9 +1,12 @@
 [Unit]
-Description=The Rust Playground
+Description=The Verus Playground
 
 [Service]
+User=playground
+Group=docker
 Environment=TMPDIR=/tmp
 Environment=RUST_LOG=info
+Environment=PLAYGROUND_GITHUB_TOKEN=     # Add your fine-grained personal acccess token here
 Environment=PLAYGROUND_UI_ADDRESS=0.0.0.0
 Environment=PLAYGROUND_UI_PORT=8080
 Environment=PLAYGROUND_UI_ROOT=/home/playground/rust-playground/ui/frontend/build
