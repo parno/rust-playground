@@ -123,7 +123,7 @@ fn basic_secure_docker_command() -> Command {
         "--cap-drop=ALL",
         // Needed to allow overwriting the file
         "--cap-add=DAC_OVERRIDE",
-        "--security-opt=no-new-privileges",
+        //"--security-opt=no-new-privileges",       // Inside our lxc container, this causes execution to fail
         "--workdir",
         "/playground",
         "--net",
