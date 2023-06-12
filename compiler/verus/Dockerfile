@@ -38,7 +38,7 @@ FROM packages as useradded
 
 ### Acquire and build Verus
 # First grab the repo metadata from GitHub; if there have been any updates, this will invalidate Docker's build cache
-ADD https://api.github.com/repos/parno/rust-playground/git/refs/heads/main
+ADD https://api.github.com/repos/parno/rust-playground/git/refs/heads/main version.json
 # Now clone the repo
 RUN git clone https://github.com/verus-lang/verus.git
 # Acquire Z3
