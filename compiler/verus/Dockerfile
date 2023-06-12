@@ -18,7 +18,7 @@ FROM base as packages
 RUN useradd -m playground -d /playground
 RUN usermod -p '!!' root # Disable all passwords for root
 
-# Attach the security note
+### Attach the security note
 ADD --chown=playground attach_notice.sh security_notice.txt /playground/
 RUN /playground/attach_notice.sh /playground/security_notice.txt /etc/passwd && \
     /playground/attach_notice.sh /playground/security_notice.txt /etc/shadow && \
@@ -36,14 +36,20 @@ ADD --chown=playground entrypoint.sh /playground/tools/
 FROM packages as useradded
 
 
-# Acquire and build Verus
+### Acquire and build Verus
+# First grab the repo metadata from GitHub; if there have been any updates, this will invalidate Docker's build cache
+ADD https://api.github.com/repos/parno/rust-playground/git/refs/heads/main
+# Now clone the repo
 RUN git clone https://github.com/verus-lang/verus.git
+# Acquire Z3
 RUN /bin/bash -c 'cd ~/verus/source && ./tools/get-z3.sh'
-# Running in QEMU, activate needs to use cargo --config net.git-fetch-with-cli=true fetch 
+# When running in QEMU (e.g., on Mac silicon), we need to manually build vargo, so we can invoke
+# cargo with an extra option that avoids cargo running QEMU out of memory
 RUN /bin/bash -c 'cd ~/verus/tools/vargo && cargo --config net.git-fetch-with-cli=true build --release'
 
 FROM useradded as verus-prep
 
+# Build Verus itself
 RUN /bin/bash -c 'cd verus/source && source ../tools/activate && vargo build --release'
 
 ENTRYPOINT ["/playground/tools/entrypoint.sh"]
