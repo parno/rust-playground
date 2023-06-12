@@ -29,6 +29,7 @@ config:
       - ca-certificates
       - gnupg
     write_files:
+      # Configure the storage driver for Docker
       - encoding: b64
         content: ewogICAgInN0b3JhZ2UtZHJpdmVyIjogIm92ZXJsYXkyIgp9Cg==
           # {
@@ -37,6 +38,14 @@ config:
         owner: root:root
         path: /etc/docker/daemon.json
         permissions: '0644'
+      # Install a cron job to run the playground's update script
+      - encoding: b64
+        content: IyEvYmluL3NoCi9ob21lL3BsYXlncm91bmQvcnVzdC1wbGF5Z3JvdW5kL2RlcGxveW1lbnQvdXBkYXRlLnNoCg==
+          # #!/bin/sh
+          # /home/playground/rust-playground/deployment/update.sh
+        owner: root:root
+        path: /etc/cron.daily/playground-update
+        permissions: '0755'
     users:
       - name: playground
     runcmd:
