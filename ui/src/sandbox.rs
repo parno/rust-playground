@@ -431,14 +431,10 @@ impl Sandbox {
     }
 
     pub async fn version(&self, _channel: Channel) -> Result<Version> {
-        debug!("\n\nRequested version info");
         let mut command = basic_secure_docker_command();
         command.arg("verus").args(&["/playground/verus/source/target-verus/release/verus", "--version"]);
-        debug!("\n\n  Using cmd: {:?}", command);
         let output = run_command_with_timeout(command).await?;
-        debug!("\n\n  output: {:?}", output);
         let version_output = vec_to_str(output.stdout)?;
-        debug!("\n\n  version_output: {}", version_output);
 
         let mut info: BTreeMap<String, String> = version_output
             .lines()
@@ -455,42 +451,15 @@ impl Sandbox {
         let version_string = info
             .remove("Version")
             .context(VersionHashMissingSnafu)?;
-
         let release = "release".to_string();
         let commit_date = version_string[2..2+10].to_string();
         let commit_hash = version_string[2+10+1..].to_string();
 
-        debug!("\n\nhash: {}, date: {}", commit_hash, commit_date);
-
         Ok(Version {
             release,
             commit_hash,
             commit_date,
         })
-
-        //Err(Error::OutputMissing)
-        /*
-        let mut command = basic_secure_docker_command();
-        command.args(&[channel.container_name()]);
-        command.args(&["rustc", "--version", "--verbose"]);
-
-        let output = run_command_with_timeout(command).await?;
-        let version_output = vec_to_str(output.stdout)?;
-
-        let release = info.remove("release").context(VersionReleaseMissingSnafu)?;
-        let commit_hash = info
-            .remove("commit-hash")
-            .context(VersionHashMissingSnafu)?;
-        let commit_date = info
-            .remove("commit-date")
-            .context(VersionDateMissingSnafu)?;
-
-        Ok(Version {
-            release,
-            commit_hash,
-            commit_date,
-        })
-        */
     }
 
     pub async fn version_rustfmt(&self) -> Result<Version> {
