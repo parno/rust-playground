@@ -482,6 +482,7 @@ impl SandboxCache {
     async fn version_stable(&self) -> Result<Stamped<MetaVersionResponse>> {
         self.version_stable
             .fetch(|sandbox| async move {
+                println!("Fetching version_stable");
                 let version = sandbox
                     .version(Channel::Stable)
                     .await

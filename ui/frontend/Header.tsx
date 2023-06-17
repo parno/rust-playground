@@ -29,6 +29,7 @@ const Header: React.FC = () => (
     <HeaderSet id="channel-mode">
       <SegmentedButtonSet>
         <ModeMenuButton />
+        <ChannelMenuButton />
       </SegmentedButtonSet>
     </HeaderSet>
     <HeaderSet id="share">
@@ -98,10 +99,10 @@ const ModeMenuButton: React.FC = () => {
 };
 
 const ChannelMenuButton: React.FC = () => {
-  const label = useSelector(selectors.getChannelLabel);
+  const label = "Version"; //useSelector(selectors.getChannelLabel);
 
   const Button = React.forwardRef<HTMLButtonElement, { toggle: () => void }>(({ toggle }, ref) => (
-    <SegmentedButton title="Channel &mdash; Choose the Rust version" ref={ref} onClick={toggle}>
+    <SegmentedButton title="Running with the following Verus version" ref={ref} onClick={toggle}>
       <HeaderButton isExpandable>{label}</HeaderButton>
     </SegmentedButton>
   ));

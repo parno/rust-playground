@@ -114,7 +114,8 @@ export const clippyVersionText = createSelector(getClippy, versionNumber);
 export const rustfmtVersionText = createSelector(getRustfmt, versionNumber);
 export const miriVersionText = createSelector(getMiri, versionNumber);
 
-const versionDetails = (v: Version | undefined) => v ? `${v.date} ${v.hash.slice(0, 20)}` : '';
+const versionDetails = (v: Version | undefined) => v ? `${v.date} <a href='https://github.com/verus-lang/verus/tree/${v.hash.slice(0, 20)}'>${v.hash.slice(0, 20)}</a> ` : '';
+export const stableVersionDetailsText = createSelector(getStable, versionDetails);
 export const betaVersionDetailsText = createSelector(getBeta, versionDetails);
 export const nightlyVersionDetailsText = createSelector(getNightly, versionDetails);
 export const clippyVersionDetailsText = createSelector(getClippy, versionDetails);
