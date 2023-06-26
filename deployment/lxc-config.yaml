@@ -40,9 +40,9 @@ config:
         permissions: '0644'
       # Install a cron job to run the playground's update script
       - encoding: b64
-        content: IyEvYmluL3NoCi9ob21lL3BsYXlncm91bmQvcnVzdC1wbGF5Z3JvdW5kL2RlcGxveW1lbnQvdXBkYXRlLnNoCg==
+        content: IyEvYmluL3NoCi9ob21lL3BsYXlncm91bmQvdmVydXMtcGxheWdyb3VuZC9kZXBsb3ltZW50L3VwZGF0ZS5zaAoK
           # #!/bin/sh
-          # /home/playground/rust-playground/deployment/update.sh
+          # /home/playground/verus-playground/deployment/update.sh
         owner: root:root
         path: /etc/cron.daily/playground-update
         permissions: '0755'
@@ -66,19 +66,19 @@ config:
       # Install rustup
       - su playground -c "cd /home/playground/ && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
       # Acquire and build the playground
-      - su playground -c "git clone https://github.com/verus-lang/verus-playground.git /home/playground/rust-playground"
-      - su playground -c "cd /home/playground/rust-playground/ui/frontend && yarn && yarn build"
-      - su -l playground -c "cd /home/playground/rust-playground/ui/ && cargo build"
-      - cd /home/playground/rust-playground/compiler/verus/ && docker build -t verus .
+      - su playground -c "git clone https://github.com/verus-lang/verus-playground.git /home/playground/verus-playground"
+      - su playground -c "cd /home/playground/verus-playground/ui/frontend && yarn && yarn build"
+      - su -l playground -c "cd /home/playground/verus-playground/ui/ && cargo build"
+      - cd /home/playground/verus-playground/compiler/verus/ && docker build -t verus .
       # Install the systemd service
-      - cp /home/playground/rust-playground/deployment/playground.service /etc/systemd/system/playground.service
+      - cp /home/playground/verus-playground/deployment/playground.service /etc/systemd/system/playground.service
       - service playground start
       - systemctl enable playground.service
       # Configure TLS
       - service nginx stop
       - certbot certonly --non-interactive --standalone -d play.verus-lang.org --agree-tos -m parno@cmu.edu --no-eff-email
       # Install the Nginx reverse proxy
-      - cp /home/playground/rust-playground/deployment/playground-reverse-proxy /etc/nginx/sites-enabled
+      - cp /home/playground/verus-playground/deployment/playground-reverse-proxy /etc/nginx/sites-enabled
       - rm /etc/nginx/sites-enabled/default
       - service nginx start
 

@@ -19,7 +19,7 @@ means that it is portable to multiple cloud providers (i.e., instead of lxc).
 - Install lxd:
     ```sudo snap install lxd```
 
-- Double check the configuration in `rust-playground/deployment/lxc-config.yaml`
+- Double check the configuration in `verus-playground/deployment/lxc-config.yaml`
     - Check the email address used in the "Configure TLS step"
 
 - Initialize lxd:
@@ -41,7 +41,7 @@ means that it is portable to multiple cloud providers (i.e., instead of lxc).
 
 - Create and launch the container
   ```
-  sudo lxc launch ubuntu:jammy/amd64 playground < rust-playground/deployment/lxc-config.yaml 
+  sudo lxc launch ubuntu:jammy/amd64 playground < verus-playground/deployment/lxc-config.yaml 
   ```
 
     - You can check on its installation progress via:
@@ -68,25 +68,25 @@ means that it is portable to multiple cloud providers (i.e., instead of lxc).
 # Updating the Playground
 
 ## Updating the front-end
-Update the files in `rust-playground/ui/frontend` and push them to the repository.
+Update the files in `verus-playground/ui/frontend` and push them to the repository.
 Then, on the server run:
 
 ```
 sudo lxc exec playground -- /bin/bash
 su playground
-~/rust-playground/ui/frontend
+~/verus-playground/ui/frontend
 git pull
 yarn build
 ```
 
 ### Updating the back-end
-Update the files in `rust-playground/ui/src` and push them to the repository.
+Update the files in `verus-playground/ui/src` and push them to the repository.
 Then, on the server run:
 
 ```
 sudo lxc exec playground -- /bin/bash
 su playground
-~/rust-playground/ui/
+~/verus-playground/ui/
 git pull
 cargo build
 exit

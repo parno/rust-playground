@@ -9,12 +9,12 @@ Environment=RUST_LOG=info
 Environment=PLAYGROUND_GITHUB_TOKEN=     # Add your fine-grained personal acccess token here
 Environment=PLAYGROUND_UI_ADDRESS=0.0.0.0
 Environment=PLAYGROUND_UI_PORT=8080
-Environment=PLAYGROUND_UI_ROOT=/home/playground/rust-playground/ui/frontend/build
+Environment=PLAYGROUND_UI_ROOT=/home/playground/verus-playground/ui/frontend/build
 Environment=PLAYGROUND_CORS_ENABLED=1
 
-WorkingDirectory=/home/playground/rust-playground
+WorkingDirectory=/home/playground/verus-playground
 
-ExecStart=/home/playground/rust-playground/ui/target/debug/ui
+ExecStart=/home/playground/verus-playground/ui/target/debug/ui
 
 [Install]
 WantedBy=multi-user.target
