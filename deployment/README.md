@@ -92,3 +92,12 @@ cargo build
 exit
 service playground restart
 ```
+
+## Renewing the TLS Certificate
+
+When Let's Encrypt sends a notice that a certificate is expiring soon, on the server run:
+
+```
+sudo lxc exec playground -- /bin/bash
+```
+Inside the container, run `certbot renew`.  If needed, you can add `--force-renew`.
