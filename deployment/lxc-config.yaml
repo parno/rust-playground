@@ -25,6 +25,7 @@ config:
       # Serving playground's web content
       - nginx
       - certbot
+      - python3-certbot-nginx
       # Updating apt lists to include Docker's key
       - ca-certificates
       - gnupg
@@ -76,7 +77,7 @@ config:
       - systemctl enable playground.service
       # Configure TLS
       - service nginx stop
-      - certbot certonly --non-interactive --standalone -d play.verus-lang.org --agree-tos -m parno@cmu.edu --no-eff-email
+      - certbot certonly --nginx --non-interactive --standalone -d play.verus-lang.org --agree-tos -m parno@cmu.edu --no-eff-email
       # Install the Nginx reverse proxy
       - cp /home/playground/verus-playground/deployment/playground-reverse-proxy /etc/nginx/sites-enabled
       - rm /etc/nginx/sites-enabled/default
