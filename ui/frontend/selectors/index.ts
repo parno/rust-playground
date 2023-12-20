@@ -74,7 +74,7 @@ export const isAutoBuildSelector = createSelector(
   rawPrimaryActionSelector,
   autoPrimaryActionSelector,
   (primaryAction, autoPrimaryAction) => (
-    primaryAction === PrimaryActionAuto.Auto && autoPrimaryAction === PrimaryActionCore.Compile
+    primaryAction === PrimaryActionAuto.Auto && autoPrimaryAction === PrimaryActionCore.Execute
   ),
 );
 

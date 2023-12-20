@@ -160,6 +160,8 @@ fn build_execution_command(
     use self::Mode::*;
 
     let mut cmd = vec!["/playground/verus/source/target-verus/release/verus"];
+    cmd.push("--crate-type");
+    cmd.push("lib");
     if mode == Debug {
         cmd.push("--expand-errors");
     }
