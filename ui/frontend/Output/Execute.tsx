@@ -19,10 +19,16 @@ const Execute: React.FC = () => {
 
   return (
     <SimplePane {...details} kind="execute">
-      {isAutoBuild && <Warning addMainFunction={addMainFunction} />}
+      {isAutoBuild}
     </SimplePane>
 
   );
+//  return (
+//    <SimplePane {...details} kind="execute">
+//      {isAutoBuild && <Warning addMainFunction={addMainFunction} />}
+//    </SimplePane>
+//
+//  );
 };
 
 interface WarningProps {
