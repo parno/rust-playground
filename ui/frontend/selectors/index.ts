@@ -22,8 +22,8 @@ export const hasTestsSelector = createSelector(codeSelector, code => !!code.matc
 
 // Since we're only verifying the code, disable this check
 //const HAS_MAIN_FUNCTION_RE = /^\s*(pub\s+)?\s*(const\s+)?\s*(async\s+)?\s*fn\s+main\s*\(\s*\)/m;
-const HAS_MAIN_FUNCTION_RE = /\s*/m;
-export const hasMainFunctionSelector = createSelector(codeSelector, code => !!code.match(HAS_MAIN_FUNCTION_RE));
+//export const hasMainFunctionSelector = createSelector(codeSelector, code => !!code.match(HAS_MAIN_FUNCTION_RE));
+export const hasMainFunctionSelector = createSelector(codeSelector, code => true);
 
 const CRATE_TYPE_RE = /^\s*#!\s*\[\s*crate_type\s*=\s*"([^"]*)"\s*]/m;
 export const crateTypeSelector = createSelector(codeSelector, code => (code.match(CRATE_TYPE_RE) || [])[1]);
